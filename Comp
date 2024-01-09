@@ -1,0 +1,31 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+namespace ECFramework
+{
+    public class Comp : IEC
+    {
+        [XmlIgnore]
+        public Entity Entity { get; set; }
+
+        public virtual void FirstCreate()
+        {
+        }
+
+        public virtual void OnSpawn()
+        {
+        }
+
+        public virtual void OnUnSpawn()
+        {
+        }
+
+        public virtual void SetReferences()
+        {
+        }
+    }
+}
