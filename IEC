@@ -1,0 +1,13 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+namespace ECFramework
+{
+    public interface IEC
+    {
+        void SetReferences();
+        void FirstCreate();
+        void OnSpawn();
+        void OnUnSpawn();
+    }
+}
