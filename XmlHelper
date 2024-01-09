@@ -1,0 +1,79 @@
+using RVITAFramework;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+namespace WindowsFormsApp1
+{
+    [XmlRoot("Root")]
+    public struct XmlWrapper
+    {
+        public List<Entity> Entities { get; set; }
+    }
+
+    public class XmlHelper
+    {
+        public static XmlSerializer XmlSerializer { get; private set; }
+        public static List<Type> Types { get; private set; } = new List<Type>();
+        public static void InitTypes(Type[] types = null)
+        {
+            if (types == null || types.Length == 0)
+                types = Assembly.GetExecutingAssembly().GetTypes();
+            Type ECType = typeof(EC);
+            foreach (Type item in types)
+            {
+                if (!item.IsClass) continue;
+                if (item.IsGenericType) continue;
+                if (ECType.IsAssignableFrom(item))
+                {
+                    if (item.Name.StartsWith("ET") || item.Name.StartsWith("CP"))
+                    {
+                        Types.Add(item);
+                    }
+                }
+            }
+        }
+        public static void InitXmlSerializer()
+        {
+            XmlSerializer = new XmlSerializer(typeof(XmlWrapper), Types.ToArray());
+        }
+        public static void SerializeToFile(List<Entity> obj, string path)
+        {
+            XmlWrapper xmlWrapper = new XmlWrapper() { Entities = obj };
+            using (FileStream fileStream = new FileStream(path, FileMode.Create))
+            {
+                XmlSerializer.Serialize(fileStream, xmlWrapper);
+            }
+        }
+        public static string Serialize(List<Entity> obj)
+        {
+            XmlWrapper xmlWrapper = new XmlWrapper() { Entities = obj };
+            using (StringWriter stringWriter = new StringWriter())
+            {
+                XmlSerializer.Serialize(stringWriter, xmlWrapper);
+                return stringWriter.ToString();
+            }
+        }
+        public static List<Entity> DeserializeFromFile(string path)
+        {
+            using (FileStream fileStream = new FileStream(path, FileMode.Open))
+            {
+                XmlWrapper xmlWrapper = (XmlWrapper)XmlSerializer.Deserialize(fileStream);
+                return xmlWrapper.Entities;
+            }
+        }
+        public static List<Entity> Deserialize(string xmlText)
+        {
+            using (StringReader stringReader = new StringReader(xmlText))
+            {
+                XmlWrapper xmlWrapper = (XmlWrapper)XmlSerializer.Deserialize(stringReader);
+                return xmlWrapper.Entities;
+            }
+        }
+    }
+}
