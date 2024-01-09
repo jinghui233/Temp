@@ -1,0 +1,44 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace ECFramework
+{
+    public class EntityPool
+    {
+        private readonly Queue<Entity> instanceQueue = new();
+        public Transform transform;
+        private string xmlText;
+        public EntityPool(Transform transform, string xmlText)
+        {
+            this.xmlText = xmlText;
+            this.transform = transform;
+            if (originInstance.GameObject != null && string.IsNullOrWhiteSpace(originInstance.PrefebPath))
+            {
+                originInstance.GameObject.transform.SetParent(transform);
+            }
+        }
+        public Entity GetInstance()
+        {
+            Entity instance;
+            if (instanceQueue.Count > 0)
+            {
+                instance = instanceQueue.Dequeue();
+            }
+            else
+            {
+                instance = originInstance.SplitNew<Entity>();//复制数据
+                instance.OnSplitNew();
+            }
+            return instance;
+        }
+        public void ReturnInstance(Entity instance)
+        {
+            instanceQueue.Enqueue(instance);
+            if (instance.GameObject != null)
+            {
+                instance.GameObject.transform.SetParent(transform);
+            }
+            instance.OnUnSpawn();
+        }
+    }
+}
