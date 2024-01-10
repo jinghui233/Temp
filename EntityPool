@@ -7,15 +7,11 @@ namespace ECFramework
     {
         private readonly Queue<Entity> instanceQueue = new();
         public Transform transform;
-        private string xmlText;
-        public EntityPool(Transform transform, string xmlText)
+        private string defName;
+        public EntityPool(string defName, Transform transform)
         {
-            this.xmlText = xmlText;
+            this.defName = defName;
             this.transform = transform;
-            if (originInstance.GameObject != null && string.IsNullOrWhiteSpace(originInstance.PrefebPath))
-            {
-                originInstance.GameObject.transform.SetParent(transform);
-            }
         }
         public Entity GetInstance()
         {
@@ -26,8 +22,8 @@ namespace ECFramework
             }
             else
             {
-                instance = originInstance.SplitNew<Entity>();//复制数据
-                instance.OnSplitNew();
+                instance = XmlHelper.GetEntity(defName);
+                instance.InitUnityComponent();
             }
             return instance;
         }
