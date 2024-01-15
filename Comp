@@ -1,31 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-
-namespace ECFramework
-{
-    public class Comp : IEC
-    {
-        [XmlIgnore]
-        public Entity Entity { get; set; }
-
-        public virtual void FirstCreate()
-        {
-        }
-
-        public virtual void OnSpawn()
-        {
-        }
-
-        public virtual void OnUnSpawn()
-        {
-        }
-
-        public virtual void SetReferences()
-        {
-        }
-    }
-}
+1.Build System Test Scene.
+2.Player Construction Mechanics.
+2.1 The first player can build a blueprint within their handling range.
+2.2 The second player can continue working on the blueprint until it is completely built.
+2.3 OnWorkTODO: Implement the character's building range function.
+2.4 OnWorkTODO: Implement the blueprint display function.
+2.5 OnWorkTODO: Implement the animation process for building a blueprint instance.
+2.6 Player control script.
