@@ -8,3 +8,4 @@
 2.6 Player control script.
 OnWork：
 RV How to save
+if subEntity are not use refMod then you shood init the subEntity immediately.
