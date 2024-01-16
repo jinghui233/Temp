@@ -7,5 +7,5 @@
 2.5 OnWorkTODO: Implement the animation process for building a blueprint instance.
 2.6 Player control script.
 OnWork：
-RV How to save
-if subEntity are not use refMod then you shood init the subEntity immediately.
+rv 如何保存
+子实体如果不采用引用的方式定义应该即时初始化
