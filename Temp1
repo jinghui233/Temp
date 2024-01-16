@@ -1,4 +1,4 @@
-1.Build System Test Scene.
+Done！1.Build System Test Scene.
 2.Player Construction Mechanics.
 2.1 The first player can build a blueprint within their handling range.
 2.2 The second player can continue working on the blueprint until it is completely built.
@@ -9,3 +9,7 @@
 OnWork：
 rv 如何保存
 子实体如果不采用引用的方式定义应该即时初始化
+菜单（业务强相关后续在考虑抽象）：
+1.详细信息菜单，可拖动关闭等，单击对象打开
+2.建造列表菜单
+3.右键菜单，对建造物进行建造，拆解
